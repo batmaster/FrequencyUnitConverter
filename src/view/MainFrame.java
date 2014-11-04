@@ -22,11 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingWorker.StateValue;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.xml.bind.JAXBException;
 
 import controller.FrequencyUnitConverterController;
+import net.webservicex.FrequencyUnitSoap;
 import net.webservicex.Frequencys;
 
 
@@ -43,6 +45,7 @@ public class MainFrame extends JFrame {
 	private JTextField resultTextField;
 	private JLabel statusLabel;
 	
+	private FrequencyUnitSoap proxy;
 	private FrequencyUnitConverterController controller;
 	
 	
@@ -142,8 +145,9 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public void setController(FrequencyUnitConverterController controller) {
-		this.controller = controller;
+	public void setSoap(FrequencyUnitSoap proxy) {
+		this.proxy = proxy;
+		controller = new FrequencyUnitConverterController(proxy, this);
 	}
 	
 	public void showResult(String result) {
@@ -155,9 +159,15 @@ public class MainFrame extends JFrame {
 	}
 
 	private void convert() {
+		if (proxy == null)
+			return;
+		
 		double value = Double.parseDouble(valueTextField.getText().toString());
 		Frequencys from = (Frequencys) fromCombobox.getSelectedItem();
 		Frequencys to = (Frequencys) toCombobox.getSelectedItem();
+		
+		if (controller == null || controller.getState() == StateValue.STARTED || controller.getState() == StateValue.DONE)
+			controller = new FrequencyUnitConverterController(proxy, this);
 		
 		controller.setParameters(value, from, to);
 		controller.execute();

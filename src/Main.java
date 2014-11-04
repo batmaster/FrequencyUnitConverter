@@ -24,8 +24,8 @@ public class Main {
 				FrequencyUnit factory = new FrequencyUnit();
 				FrequencyUnitSoap proxy = factory.getFrequencyUnitSoap();
 				
-				FrequencyUnitConverterController controller = new FrequencyUnitConverterController(proxy, mainFrame);
-				mainFrame.setController(controller);
+				mainFrame.setSoap(proxy);
+				break;
 			} catch (WebServiceException e) {
 				mainFrame.showStatus("Connection error");
 				e.printStackTrace();
@@ -39,16 +39,5 @@ public class Main {
 			    }
 			}
 		}
-		
-		
-		
-		
-		
-		
-//		double rate = proxy.changeFrequencyUnit(300, from, to);
-//		
-//		System.out.printf("1 %s = %f %s", from, rate, to);
-		
-		
 	}
 }

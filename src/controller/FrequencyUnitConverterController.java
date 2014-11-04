@@ -35,6 +35,7 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 	protected Double doInBackground() throws Exception {
 		// STARTED
 		gui.showStatus(this.getState().toString());
+//		Thread.currentThread().sleep(5000);
 		return proxy.changeFrequencyUnit(value, from, to);
 	}
 
@@ -46,10 +47,10 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 		try {
 			gui.showResult(get().toString());
 		} catch (InterruptedException e) {
-			gui.showStatus(e.getMessage());
+			gui.showStatus("Interrupted, please try again");
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			gui.showStatus(e.getMessage());
+			gui.showStatus("Connection error, please try again");
 			e.printStackTrace();
 		}
 	}
