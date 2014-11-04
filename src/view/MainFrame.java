@@ -31,9 +31,17 @@ import controller.FrequencyUnitConverterController;
 import net.webservicex.FrequencyUnitSoap;
 import net.webservicex.Frequencys;
 
+/**
+ * Main user interface.
+ * Need to be {@link MainFrame#setSoap(FrequencyUnitSoap)} to be able to {@link MainFrame#convert()}.
+ * 
+ * @author Poramate Homprakob 5510546077
+ *
+ */
 
 public class MainFrame extends JFrame {
 	
+	/** User interface components */
 	private JPanel mainPanel;
 	private JPanel topPanel;
 	private JTextField valueTextField;
@@ -45,10 +53,16 @@ public class MainFrame extends JFrame {
 	private JTextField resultTextField;
 	private JLabel statusLabel;
 	
+	/** Soap, forwarded to controller every time it is initialized */
 	private FrequencyUnitSoap proxy;
+	
+	/** Will be initialized every time convert() invoked to be able to convert many time. */
 	private FrequencyUnitConverterController controller;
 	
 	
+	/**
+	 * Plain constructor, require nothing.
+	 */
 	public MainFrame() {
 		super("Frequency Unit Converter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +72,9 @@ public class MainFrame extends JFrame {
 		initComponents();
 	}
 
+	/**
+	 * Initialize components.
+	 */
 	private void initComponents() {
 		setLayout(new FlowLayout());
 		mainPanel = new JPanel();
@@ -140,24 +157,43 @@ public class MainFrame extends JFrame {
 		this.add(mainPanel);
 	}
 	
+	/**
+	 * For showing this user interface.
+	 */
 	public void run() {
 		pack();
 		setVisible(true);
 	}
 	
+	/**
+	 * Set Soap for calling for services.
+	 * If not, cannot call convert().
+	 * @param proxy the Soap for frequency unit converter
+	 */
 	public void setSoap(FrequencyUnitSoap proxy) {
 		this.proxy = proxy;
 		controller = new FrequencyUnitConverterController(proxy, this);
 	}
 	
+	/**
+	 * Set text in result box.
+	 * @param result the text want to be shown as result
+	 */
 	public void showResult(String result) {
 		resultTextField.setText(result);
 	}
 	
+	/**
+	 * Set the in status box.
+	 * @param status the text want to be shown as status or error warning
+	 */
 	public void showStatus(String status) {
 		statusLabel.setText(status);
 	}
 
+	/**
+	 * To start calling the service.
+	 */
 	private void convert() {
 		if (proxy == null)
 			return;

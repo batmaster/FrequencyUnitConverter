@@ -8,15 +8,35 @@ import net.webservicex.FrequencyUnitSoap;
 import net.webservicex.Frequencys;
 import view.MainFrame;
 
+/**
+ * Controller for handle calling service.
+ * Auto call {@link MainFrame#showResult(String)} when service success
+ * or {@link MainFrame#showStatus(String)} if error occurs.
+ * 
+ * Need to be {@link FrequencyUnitConverterController#setParameters(double, Frequencys, Frequencys)}
+ * before calling {@link FrequencyUnitConverterController#execute()}.
+ * 
+ * @author Poramate Homprakob 5510546077
+ *
+ */
 public class FrequencyUnitConverterController extends SwingWorker<Double, Double> {
 	
+	/** For calling service */
 	private FrequencyUnitSoap proxy;
+	
+	/** For return the result or status or error */
 	private MainFrame gui;
 	
+	/** Parameters for service calling */
 	private double value;
 	private Frequencys from;
 	private Frequencys to;
 	
+	/**
+	 * Constructor, require Soap and user interface.
+	 * @param proxy the Soap for calling service
+	 * @param gui  the user interface for showing
+	 */
 	public FrequencyUnitConverterController(FrequencyUnitSoap proxy, MainFrame gui) {
 		this.proxy = proxy;
 		this.gui = gui;
@@ -24,6 +44,12 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 		gui.showStatus(this.getState().toString());
 	}
 	
+	/**
+	 * Set service parameters be used whan calling {@link FrequencyUnitConverterController#execute()}.
+	 * @param value the value to be convert
+	 * @param from source unit
+	 * @param to destination unit
+	 */
 	public void setParameters(double value, Frequencys from, Frequencys to) {
 		System.out.println(from + " " + to);
 		this.value = value;
@@ -31,6 +57,11 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 		this.to = to;
 	}
 
+	/**
+	 * Call service in another thread.
+	 * Auto call done() when finish.
+	 * And call get() when want to get the service result.
+	 */
 	@Override
 	protected Double doInBackground() throws Exception {
 		// STARTED
@@ -39,6 +70,10 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 		return proxy.changeFrequencyUnit(value, from, to);
 	}
 
+	/**
+	 * When service result retrieved.
+	 * Show result in result box if success or show error in status box if fail.
+	 */
 	@Override
 	protected void done() {
 		super.done();
@@ -54,5 +89,4 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 			e.printStackTrace();
 		}
 	}
-
 }

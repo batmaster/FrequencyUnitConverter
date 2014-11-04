@@ -2,15 +2,20 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.xml.ws.WebServiceException;
 
-import org.omg.CORBA.FREE_MEM;
-
-import controller.FrequencyUnitConverterController;
-import view.MainFrame;
 import net.webservicex.FrequencyUnit;
 import net.webservicex.FrequencyUnitSoap;
-import net.webservicex.Frequencys;
+import view.MainFrame;
 
-
+/**
+ * Main class, initialize MainFrame and Soap,
+ * then set Soap to MainFrame to be forward to Controller when initializing.
+ * 
+ * Note that if connection error, a prompt will ask for re-conect
+ * or close the app.
+ * 
+ * @author Poramate Homprakob 5510546077
+ *
+ */
 
 public class Main {
 
