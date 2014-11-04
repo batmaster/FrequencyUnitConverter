@@ -129,7 +129,7 @@ public class MainFrame extends JFrame {
 		mainPanel.add(bottomPanel);
 		
 		/* Status Panel */
-		statusLabel = new JLabel("Idle");
+		statusLabel = new JLabel("Connecting...");
 		statusLabel.setPreferredSize(new Dimension((int) this.getPreferredSize().getWidth() - 10, 25));
 		
 		mainPanel.add(statusLabel);

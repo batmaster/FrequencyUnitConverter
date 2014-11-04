@@ -20,6 +20,8 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 	public FrequencyUnitConverterController(FrequencyUnitSoap proxy, MainFrame gui) {
 		this.proxy = proxy;
 		this.gui = gui;
+		// PENDING
+		gui.showStatus(this.getState().toString());
 	}
 	
 	public void setParameters(double value, Frequencys from, Frequencys to) {
@@ -31,13 +33,15 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 
 	@Override
 	protected Double doInBackground() throws Exception {
-		gui.showStatus("Do in background...");
-		return proxy.changeFrequencyUnit(300, from, to);
+		// STARTED
+		gui.showStatus(this.getState().toString());
+		return proxy.changeFrequencyUnit(value, from, to);
 	}
 
 	@Override
 	protected void done() {
 		super.done();
+		// DONE
 		gui.showStatus(this.getState().toString());
 		try {
 			gui.showResult(get().toString());
