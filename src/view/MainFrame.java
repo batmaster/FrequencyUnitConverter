@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker.StateValue;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -51,6 +52,7 @@ public class MainFrame extends JFrame {
 	private JComboBox<Frequencys> toCombobox;
 	private JPanel bottomPanel;
 	private JTextField resultTextField;
+	private JPanel statusPanel;
 	private JLabel statusLabel;
 	
 	/** Soap, forwarded to controller every time it is initialized */
@@ -149,10 +151,15 @@ public class MainFrame extends JFrame {
 		mainPanel.add(bottomPanel);
 		
 		/* Status Panel */
+		statusPanel = new JPanel(new FlowLayout());
+		
 		statusLabel = new JLabel("Connecting...");
 		statusLabel.setPreferredSize(new Dimension((int) this.getPreferredSize().getWidth() - 10, 25));
+		statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		mainPanel.add(statusLabel);
+		statusPanel.add(statusLabel);
+		
+		mainPanel.add(statusPanel);
 		
 		this.add(mainPanel);
 	}
