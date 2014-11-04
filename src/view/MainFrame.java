@@ -26,6 +26,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.xml.bind.JAXBException;
 
+import controller.FrequencyUnitConverterController;
 import net.webservicex.Frequencys;
 
 
@@ -42,6 +43,8 @@ public class MainFrame extends JFrame {
 	private JTextField resultTextField;
 	private JLabel statusLabel;
 	
+	private FrequencyUnitConverterController controller;
+	
 	
 	public MainFrame() {
 		super("Frequency Unit Converter");
@@ -50,8 +53,6 @@ public class MainFrame extends JFrame {
 		setResizable(false);
 		
 		initComponents();
-		pack();
-		setVisible(true);
 	}
 
 	private void initComponents() {
@@ -135,8 +136,30 @@ public class MainFrame extends JFrame {
 		
 		this.add(mainPanel);
 	}
+	
+	public void run() {
+		pack();
+		setVisible(true);
+	}
+	
+	public void setController(FrequencyUnitConverterController controller) {
+		this.controller = controller;
+	}
+	
+	public void showResult(String result) {
+		resultTextField.setText(result);
+	}
+	
+	public void showStatus(String status) {
+		statusLabel.setText(status);
+	}
 
 	private void convert() {
+		double value = Double.parseDouble(valueTextField.getText().toString());
+		Frequencys from = (Frequencys) fromCombobox.getSelectedItem();
+		Frequencys to = (Frequencys) toCombobox.getSelectedItem();
 		
+		controller.setParameters(value, from, to);
+		controller.execute();
 	}
 }
