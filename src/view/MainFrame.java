@@ -9,7 +9,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -60,7 +64,6 @@ public class MainFrame extends JFrame {
 	
 	/** Will be initialized every time convert() invoked to be able to convert many time. */
 	private FrequencyUnitConverterController controller;
-	
 	
 	/**
 	 * Plain constructor, require nothing.
@@ -153,7 +156,7 @@ public class MainFrame extends JFrame {
 		/* Status Panel */
 		statusPanel = new JPanel(new FlowLayout());
 		
-		statusLabel = new JLabel("Connecting...");
+		statusLabel = new JLabel("Preparing...");
 		statusLabel.setPreferredSize(new Dimension((int) this.getPreferredSize().getWidth() - 10, 25));
 		statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		

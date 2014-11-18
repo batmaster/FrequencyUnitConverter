@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.SwingWorker;
 
@@ -51,7 +53,7 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 	 * @param to destination unit
 	 */
 	public void setParameters(double value, Frequencys from, Frequencys to) {
-		System.out.println(from + " " + to);
+		System.out.println(value + " " + from + " " + to);
 		this.value = value;
 		this.from = from;
 		this.to = to;
@@ -80,7 +82,12 @@ public class FrequencyUnitConverterController extends SwingWorker<Double, Double
 		// DONE
 		gui.showStatus(this.getState().toString());
 		try {
-			gui.showResult(get().toString());
+			try {
+				gui.showResult(get(15, TimeUnit.SECONDS).toString());
+			} catch (TimeoutException e) {
+				gui.showStatus("Timeout, please try again");
+				e.printStackTrace();
+			}
 		} catch (InterruptedException e) {
 			gui.showStatus("Interrupted, please try again");
 			e.printStackTrace();

@@ -26,6 +26,7 @@ public class Main {
 		
 		while (true) {
 			try {
+				mainFrame.showStatus("Connecting...");
 				FrequencyUnit factory = new FrequencyUnit();
 				FrequencyUnitSoap proxy = factory.getFrequencyUnitSoap();
 				
